@@ -4,9 +4,9 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
   
   def create
-    @comment = @article.comments.create(comment_params)
-    @comment.update(:commenter => current_user.email)
-    @comment.update(:user_id => current_user.id)
+    @comment = @article.comments.new(comment_params)
+    @comment.user_id = current_user.id
+    @comment.save
     redirect_to article_path(@article)
   end
 
