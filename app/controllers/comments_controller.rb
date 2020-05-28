@@ -17,7 +17,7 @@ class CommentsController < ApplicationController
   
   private
   def comment_params
-    params.require(:comment).permit(:body, :private)
+    params.require(:comment).permit(:body, :isPrivate)
   end
 
   def find_article_by_id

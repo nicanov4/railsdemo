@@ -1,7 +1,7 @@
 <%= form_with(model: [ @article, @article.comments.build ], local: true) do |form| %>
 <p>
-  <%= form.label :private %>
-  <%= form.select :private, [['Private', true], ['public', false]] %>
+  <%= form.label :Private_or_public %>
+  <%= form.select :isPrivate, [['Private', true], ['public', false]] %>
 </p>
 
 <p>

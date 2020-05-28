@@ -9,7 +9,9 @@
 </p>
 
 <h2>Comments</h2>
-<%= render @article.comments %>
+<%= render @article.comments.isPublic %>
+<p>Your private comments</p>
+<%= render @article.comments.isPrivate %>
 
 <h2>Add a comment:</h2>
 <%= render 'comments/form' %>
