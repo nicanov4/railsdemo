@@ -6,6 +6,7 @@ class CommentsController < ApplicationController
   def create
     @comment = @article.comments.create(comment_params)
     @comment.update(:commenter => current_user.email)
+    @comment.update(:user_id => current_user.id)
     redirect_to article_path(@article)
   end
 
