@@ -1,26 +1,23 @@
 class ArticlesController < ApplicationController
 
-  http_basic_authenticate_with name: "dhh", password: "secret", except: [:index, :show]
-
+  before_action :find_all_articles, only: [:index]
+  before_action :find_article_by_id, only: [:show, :edit, :update, :destroy]
+  before_action :make_new_article, only: [:new]
+  before_action :find_new_article, only: [:create]
+   
   def index
-    @articles = Article.all
   end
 
   def show
-    @article = Article.find(params[:id])
   end
   
   def new
-    @article = Article.new
   end
 
   def edit
-    @article = Article.find(params[:id])
   end
   
   def create
-    @article = Article.new(article_params)
- 
     if @article.save
       redirect_to @article
     else
@@ -29,8 +26,6 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    @article = Article.find(params[:id])
-
     if @article.update(article_params)
       redirect_to @article
     else
@@ -39,7 +34,6 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    @article = Article.find(params[:id])
     @article.destroy
     redirect_to articles_path
   end
@@ -47,5 +41,21 @@ class ArticlesController < ApplicationController
   private
   def article_params
     params.require(:article).permit(:title, :text)
+  end
+
+  def find_all_articles
+    @articles = Article.all
+  end
+
+  def find_article_by_id
+    @article = Article.find(params[:id])
+  end
+
+  def make_new_article
+    @article = Article.new
+  end
+  
+  def find_new_article
+    @article = Article.new(article_params)
   end
 end
