@@ -1,0 +1,14 @@
+<%= form_with(model: [ @article, @article.comments.build ], local: true) do |form| %>
+<p>
+  <%= form.label :Private_or_public %>
+  <%= form.select :isPrivate, [['Private', true], ['public', false]] %>
+</p>
+
+<p>
+  <%= form.label :body %><br>
+  <%= form.text_area :body %>
+</p>
+<p>
+  <%= form.submit %>
+</p>
+<% end %>
