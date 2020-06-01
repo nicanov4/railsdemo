@@ -20,12 +20,11 @@ class Api::ArticlesController < ApplicationController
 
   def update
     @article.update(article_params)
-    respond_with Article, json: article
+    respond_with Article, json: @article
   end
 
   def destroy
     respond_with @article.destroy
-    redirect_to articles_path
   end
   
   private

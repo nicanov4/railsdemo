@@ -1,4 +1,5 @@
 import React from 'react';
+import { success } from '../helpers/notifications';
 import axios from 'axios';
 import ArticlesList from './ArticlesList';
 import { Switch } from 'react-router-dom';
@@ -34,10 +35,10 @@ class Editor extends React.Component {
 		success('Article Added!');
 		const savedArticle = response.data;
 		this.setState(prevState => ({
-		    events: [...prevState.articles, savedArticle],
+		    articles: [...prevState.articles, savedArticle],
 		}));
 		const { history } = this.props;
-		history.push(`/articles/${savedEvent.id}`);
+		history.push(`/articles/${savedArticle.id}`);
 	    })
 	    .catch(handleAjaxError);
     }
@@ -49,7 +50,7 @@ class Editor extends React.Component {
 		success('Article updated');
 		const { articles } = this.state;
 		const idx = articles.findIndex(article => article.id === updatedArticle.id);
-		events[idx] = updatedArticle;
+		articles[idx] = updatedArticle;
 		const { history } = this.props;
 		history.push(`/articles/${updatedArticle.id}`);
 		this.setState({ articles });

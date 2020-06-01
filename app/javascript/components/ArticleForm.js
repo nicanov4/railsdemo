@@ -1,5 +1,5 @@
 import React from 'react';
-import EventNotFound from './EventNotFound';
+import EventNotFound from './ArticleNotFound';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { isEmptyObject, validateArticle } from '../helpers/helpers';
