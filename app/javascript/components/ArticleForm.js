@@ -1,4 +1,6 @@
 import React from 'react';
+import EventNotFound from './EventNotFound';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { isEmptyObject, validateArticle } from '../helpers/helpers';
 
@@ -22,7 +24,8 @@ class ArticleForm extends React.Component {
 	if (!isEmptyObject(errors)) {
 	    this.setState({ errors });
 	} else {
-	    console.log(article);
+	    const { onSubmit } = this.props;
+	    onSubmit(article);
 	}
     }
 
@@ -38,7 +41,7 @@ class ArticleForm extends React.Component {
 	    },
 	}));
     }
-
+    
     renderErrors() {
 	const { errors } = this.state;
 	if (isEmptyObject(errors)) {
@@ -58,33 +61,45 @@ class ArticleForm extends React.Component {
     }
 	
     render() {
+	const { article } = this.state;
+	const { path } = this.props;
+
+	if (!event.id && path === '/events/:id/edit') return <EventNotFound />;
+	
+	const cancelURL = article.id ? `/articles/${article.id}` : '/articles';
 	return (
-	        <div>
+		<div>
 		<h2>New Article</h2>
+		{this.renderErrors()}
 		<form className="articleForm" onSubmit={this.handleSubmit}>
 		<div>
 		<label htmlFor="title">
 		<strong>Title:</strong>
-		<input type="text" id="title" name="title" onChange={this.handleInputChange}/>
+		<input type="text" id="title" name="title" onChange={this.handleInputChange} value={article.title}/>
 		</label>
 		</div>
 		<div>
 		<label htmlFor="text">
 		<strong>Text:</strong>
-		<textarea cols="30" rows="10" id="text" name="text" onChange={this.handleInputChange}/>
+		<textarea cols="30" rows="10" id="text" name="text" onChange={this.handleInputChange} value={article.text}/>
 		</label>
 		</div>
 		<div className="form-actions">
 		<button type="submit">Save</button>
-		</div>
+		<Link to={cancelURL}>Cancel</Link>
+	        </div>
 		</form>
 		</div>
 	);
     }
 }
 
+
+
 ArticleForm.propTypes = {
     article: PropTypes.shape(),
+    path: PropTypes.string.isRequired,
+    onSubmit: PropTypes.func.isRequired,
 };
 
 ArticleForm.defaultProps = {
