@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
-
-  root 'site#index'
+  root to: redirect('/articles')
   
+
+  get 'articles', to: 'site#index'
+  get 'articles/new', to: 'site#index'
+  get 'articles/:id', to: 'site#index'
+  get 'articles/:id/edit', to: 'site#index'
   devise_for :users
 
   namespace :api do

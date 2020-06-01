@@ -11,10 +11,6 @@ class Api::ArticlesController < ApplicationController
     respond_with @article
   end
   
-  def new
-    @article = Article.new
-  end
-
   def edit
   end
   
