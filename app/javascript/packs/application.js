@@ -12,11 +12,18 @@ import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import App from '../components/App';
+import { Provider } from 'react-redux';
+import store from '../Store';
+import { createStore } from 'redux';
+import reducer from '../reducers/ArticleReducer';
 
+const store = createStore(reducer)
 document.addEventListener('DOMContentLoaded', () => {
     render(
-	<BrowserRouter>
+	    <BrowserRouter>
+	    <Provider store = {store}>
 	    <App />
+	    </Provider>
 	</BrowserRouter>,
 	document.querySelector('#root'));
 });

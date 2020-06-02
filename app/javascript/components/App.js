@@ -3,12 +3,14 @@ import React from 'react';
 import Editor from './Editor';
 import { Route } from 'react-router-dom';
 import { Alert } from '../helpers/notifications';
+import { Provider } from 'react-redux';
+
 
 const App = () => (
     <div>
         <Route path="/articles/:id?" component={Editor} />
 	<Alert stack={ { limit: 3 } } />
-    </div>
+	</div>
 );
 
 export default App;
