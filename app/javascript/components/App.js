@@ -4,7 +4,7 @@ import Editor from './Editor';
 import { Route } from 'react-router-dom';
 import { Alert } from '../helpers/notifications';
 import { Provider } from 'react-redux';
-
+import ArticlesList from './ArticlesList';
 
 const App = () => (
     <div>

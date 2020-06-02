@@ -1,3 +1,5 @@
+
+import { connect } from 'react-redux';
 import React from 'react';
 import { success } from '../helpers/notifications';
 import axios from 'axios';
@@ -8,87 +10,59 @@ import { handleAjaxError } from '../helpers/helpers';
 import ArticleForm from './ArticleForm';
 import PropsRoute from './PropsRoute';
 import Article from './Article';
+import { fetchArticles, addArticle, updateArticle, deleteArticle } from '../actions/ArticleActions';
+
+const mapStateToProps = state => {
+    return {
+	articles: state.articles,
+    };
+};
 
 class Editor extends React.Component {
     constructor(props) {
 	super(props);
-
-	this.state = {
-	    articles: null,
-	};
 	this.updateArticle = this.updateArticle.bind(this);
 	this.addArticle = this.addArticle.bind(this);
 	this.deleteArticle = this.deleteArticle.bind(this);
     }
 
     componentDidMount() {
-	axios
-	    .get('/api/articles.json')
-	    .then(response => this.setState({ articles: response.data }))
-	    .catch(handleAjaxError);
+	this.props.dispatch(fetchArticles());
     }
 
     addArticle(newArticle) {
-	axios
-	    .post('/api/articles.json', newArticle)
-	    .then((response) => {
-		success('Article Added!');
-		const savedArticle = response.data;
-		this.setState(prevState => ({
-		    articles: [...prevState.articles, savedArticle],
-		}));
-		const { history } = this.props;
-		history.push(`/articles/${savedArticle.id}`);
-	    })
-	    .catch(handleAjaxError);
+	this.props.dispatch(addArticle(newArticle));
+	const { history } = this.props;
+	history.push(`/articles/${newArticle.id}`);
     }
 
     updateArticle(updatedArticle) {
-	axios
-	    .put(`/api/articles/${updatedArticle.id}.json`, updatedArticle)
-	    .then(() => {
-		success('Article updated');
-		const { articles } = this.state;
-		const idx = articles.findIndex(article => article.id === updatedArticle.id);
-		articles[idx] = updatedArticle;
-		const { history } = this.props;
-		history.push(`/articles/${updatedArticle.id}`);
-		this.setState({ articles });
-	    })
-	    .catch(handleAjaxError);
+	this.props.dispatch(updateArticle(updatedArticle));
+	const { history } = this.props;
+	history.push(`/articles/${updatedArticle.id}`);
     }
 
     deleteArticle(articleId) {
 	const sure = window.confirm('Are you sure?');
 	if (sure) {
-	    axios
-	        .delete(`/api/articles/${articleId}.json`)
-	        .then((response) => {
-		    if (response.status === 204) {
-			success('Article deleted');
-			const { history } = this.props;
-			history.push('/articles');
-
-			const { articles } = this.state;
-			this.setState({ articles: articles.filter(article => article.id !== articleId) });
-		    }
-		})
-	        .catch(handleAjaxError);
+	    this.props.dispatch(deleteArticle(articleId));
+	    const { history } = this.props;
+	    history.push(`/articles`);
 	}
     }
 
+
     render() {
-	const { articles } = this.state;
-	if (articles === null) return null;
+	if (this.props.articles === null) return null;
 
 	const { match } = this.props;
 	const articleId = match.params.id;
-	const article = articles.find(a => a.id === Number(articleId));
+	const article = this.props.articles.find(a => a.id === Number(articleId));
 
 	return (
 	        <div>
 		<div className="grid">
-		<ArticlesList articles={articles}  activeId={Number(articleId)}/>
+		<ArticlesList articles={this.props.articles}  activeId={Number(articleId)}/>
 		<Switch>
 		<PropsRoute path="/articles/new" component={ArticleForm} onSubmit={this.addArticle}/>
 		<PropsRoute
@@ -116,4 +90,5 @@ Editor.defaultProps = {
     match: undefined,
 };
 
-export default Editor;
+
+export default connect(mapStateToProps, null)(Editor);

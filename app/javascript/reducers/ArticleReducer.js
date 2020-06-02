@@ -18,6 +18,7 @@ export default function reducer(state={
 	    fetched: true,
 	    articles: action.payload,
 	}
+	console.log(articles);
     }
     case "ADD_ARTICLE": {
 	return {
@@ -26,9 +27,9 @@ export default function reducer(state={
 	}
     }
     case "UPDATE_ARTICLE": {
-	const { id } = action.payload
+	const { updatedArticle } = action.payload
 	const newArticles = [...state.articles]
-	const articleToUpdate = newArticles.findIndex(article => article.id === id)
+	const articleToUpdate = newArticles.findIndex(article => article.id === updatedArticle.id)
 	newArticles[articleToUpdate] = action.payload;
 
 	return {
