@@ -13,11 +13,13 @@ import { render } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import App from '../components/App';
 import { Provider } from 'react-redux';
-import store from '../Store';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import { fetchArticles } from '../actions/ArticleActions';
 import reducer from '../reducers/ArticleReducer';
 
-const store = createStore(reducer)
+const store = createStore(reducer, applyMiddleware(thunk));
+store.dispatch(fetchArticles());
 document.addEventListener('DOMContentLoaded', () => {
     render(
 	    <BrowserRouter>
