@@ -3,7 +3,7 @@ import EventNotFound from './ArticleNotFound';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { isEmptyObject, validateArticle } from '../helpers/helpers';
-import { addArticle } from '../actions/ArticleActions';
+import { addArticle, updateArticle } from '../actions/ArticleActions';
 import { connect } from 'react-redux'
 
 const mapStateToProps = state => {
@@ -15,9 +15,9 @@ const mapStateToProps = state => {
 class ArticleForm extends React.Component {
     constructor(props) {
 	super(props);
-
+	
 	this.state = {
-	    article: this.props.article,
+	    article: props.location.state.article,
 	    errors: {},
 	};
 
@@ -32,6 +32,12 @@ class ArticleForm extends React.Component {
 	history.push(`/articles`);
     }
 
+    updateArticle(updatedArticle) {
+	this.props.dispatch(updateArticle(updatedArticle));
+	const { history } = this.props;
+	history.push(`/articles/${updatedArticle.id}`);
+    }
+    
     handleSubmit(e) {
 	e.preventDefault();
 	const { article } = this.state;
@@ -39,8 +45,11 @@ class ArticleForm extends React.Component {
 	if (!isEmptyObject(errors)) {
 	    this.setState({ errors });
 	} else {
-	    const { onSubmit } = this.props;
-	    this.addArticle(article);
+	    if (!article.id) {
+		this.addArticle(article);
+	    } else {
+		this.updateArticle(article);
+	    }
 	}
     }
 
@@ -77,6 +86,10 @@ class ArticleForm extends React.Component {
 
     render() {
 	const { article } = this.state;
+	console.log(article);
+	const { match } = this.props;
+	if (!article.id && match.path === '/article/:id/edit') return <ArticleNotFound />;
+	const cancelURL = article.id ? `/articles/${article.id}` : '/articles';
 	return (
 		<div>
 		<h2>New Article</h2>
@@ -96,7 +109,7 @@ class ArticleForm extends React.Component {
 		</div>
 		<div className="form-actions">
 		<button type="submit">Save</button>
-		<Link to="/articles">Cancel</Link>
+		<Link to={cancelURL}>Cancel</Link>
 		</div>
 		</form>
 		</div>
@@ -104,17 +117,22 @@ class ArticleForm extends React.Component {
     }
 }
 
+const defaultLocation = {
+    state: {
+	article: {
+	    title: '',
+	    text: '',
+	},
+    },
+};
 
 
 ArticleForm.propTypes = {
-    article: PropTypes.shape(),
+    match: PropTypes.shape(),
 };
 
 ArticleForm.defaultProps = {
-    article: {
-	title: '',
-	text: '',
-    },
+    location: defaultLocation,
 };
 
 

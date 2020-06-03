@@ -27,31 +27,36 @@ class Article extends React.Component {
     }
 
     render() {
-        const { match } = this.props;
+	const { match } = this.props;
 	const articleId = match.params.id;
 	const article = this.props.articles.find(a => a.id === Number(articleId));
 
 	if (!article) return <ArticleNotFound/>;
-	
+
 	return (
-	<div className="articleContainer">
-	<Link to={`/articles/${article.id}/edit`}>Edit</Link>
-	<button className="delete" type="button" onClick={() => this.deleteArticle(article.id)}>
-	Delete
-        </button>
-	<ul>
-        <strong>Title:</strong>
-	<li>
-	    {article.title}
-        </li>
-	<li>
-	<strong>Text:</strong>
-	{' '}
-    {article.text}
-          </li>
-        </ul>
-	</div>
-    );
+		<div className="articleContainer">
+		<Link to={{
+		    pathname: `/articles/${article.id}/edit`,
+		    state: {
+			article: article,
+		    }
+		}}>Edit</Link>
+		<button className="delete" type="button" onClick={() => this.deleteArticle(article.id)}>
+		Delete
+	    </button>
+		<ul>
+		<strong>Title:</strong>
+		<li>
+		{article.title}
+	    </li>
+		<li>
+		<strong>Text:</strong>
+		{' '}
+	    {article.text}
+	    </li>
+		</ul>
+		</div>
+	);
     }
 }
 
@@ -64,4 +69,4 @@ Article.defaultProps = {
     match: undefined
 };
 
-    export default connect(mapStateToProps, null)(Article);
+export default connect(mapStateToProps, null)(Article);
