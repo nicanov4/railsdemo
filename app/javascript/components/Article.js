@@ -1,15 +1,42 @@
-
+import { deleteArticle } from '../actions/ArticleActions';
+import PropsRoute from './PropsRoute';
 import React from 'react';
 import ArticleNotFound from './ArticleNotFound';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-const Article = ({ article, onDelete }) => {
-        if (!article) return <ArticleNotFound />;
-    return (
+const mapStateToProps = state => {
+    return {
+	articles:state.articles,
+    };
+};
+
+class Article extends React.Component {
+    constructor(props) {
+	super(props);
+    }
+
+    deleteArticle(articleId) {
+	const sure = window.confirm('Are you sure?');
+	if (sure) {
+	    this.props.dispatch(deleteArticle(articleId));
+	    const { history } = this.props;
+	    history.push(`/articles`);
+	}
+    }
+
+    render() {
+        const { match } = this.props;
+	const articleId = match.params.id;
+	const article = this.props.articles.find(a => a.id === Number(articleId));
+
+	if (!article) return <ArticleNotFound/>;
+	
+	return (
 	<div className="articleContainer">
 	<Link to={`/articles/${article.id}/edit`}>Edit</Link>
-	<button className="delete" type="button" onClick={() => onDelete(article.id)}>
+	<button className="delete" type="button" onClick={() => this.deleteArticle(article.id)}>
 	Delete
         </button>
 	<ul>
@@ -25,15 +52,16 @@ const Article = ({ article, onDelete }) => {
         </ul>
 	</div>
     );
-    };
+    }
+}
 
 Article.propTypes = {
-    onDelete: PropTypes.func.isRequired,
-    article: PropTypes.shape(),
+    match: PropTypes.shape(),
+    history: PropTypes.shape({push: PropTypes.func}).isRequired,
 };
 
 Article.defaultProps = {
-    article: undefined
+    match: undefined
 };
 
-export default Article;
+    export default connect(mapStateToProps, null)(Article);

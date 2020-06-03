@@ -3,18 +3,33 @@ import EventNotFound from './ArticleNotFound';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { isEmptyObject, validateArticle } from '../helpers/helpers';
+import { addArticle } from '../actions/ArticleActions';
+import { connect } from 'react-redux'
+
+const mapStateToProps = state => {
+    return {
+	articles: state.articles,
+    };
+};
 
 class ArticleForm extends React.Component {
     constructor(props) {
 	super(props);
 
 	this.state = {
-	    article: props.article,
+	    article: this.props.article,
 	    errors: {},
 	};
-	
+
 	this.handleSubmit = this.handleSubmit.bind(this);
 	this.handleInputChange = this.handleInputChange.bind(this);
+	this.addArticle = this.addArticle.bind(this);
+    }
+
+    addArticle(newArticle) {
+	this.props.dispatch(addArticle(newArticle));
+	const { history } =this.props;
+	history.push(`/articles`);
     }
 
     handleSubmit(e) {
@@ -25,7 +40,7 @@ class ArticleForm extends React.Component {
 	    this.setState({ errors });
 	} else {
 	    const { onSubmit } = this.props;
-	    onSubmit(article);
+	    this.addArticle(article);
 	}
     }
 
@@ -41,13 +56,13 @@ class ArticleForm extends React.Component {
 	    },
 	}));
     }
-    
+
     renderErrors() {
 	const { errors } = this.state;
 	if (isEmptyObject(errors)) {
 	    return null;
-        }  
-    
+	}
+
 	return (
 	        <div className="errors">
 		<h3>The following errors prohibited the event from being saved:</h3>
@@ -59,14 +74,9 @@ class ArticleForm extends React.Component {
 		</div>
 	);
     }
-	
+
     render() {
 	const { article } = this.state;
-	const { path } = this.props;
-
-	if (!event.id && path === '/events/:id/edit') return <EventNotFound />;
-	
-	const cancelURL = article.id ? `/articles/${article.id}` : '/articles';
 	return (
 		<div>
 		<h2>New Article</h2>
@@ -86,8 +96,8 @@ class ArticleForm extends React.Component {
 		</div>
 		<div className="form-actions">
 		<button type="submit">Save</button>
-		<Link to={cancelURL}>Cancel</Link>
-	        </div>
+		<Link to="/articles">Cancel</Link>
+		</div>
 		</form>
 		</div>
 	);
@@ -98,8 +108,6 @@ class ArticleForm extends React.Component {
 
 ArticleForm.propTypes = {
     article: PropTypes.shape(),
-    path: PropTypes.string.isRequired,
-    onSubmit: PropTypes.func.isRequired,
 };
 
 ArticleForm.defaultProps = {
@@ -110,4 +118,4 @@ ArticleForm.defaultProps = {
 };
 
 
-export default ArticleForm;
+export default connect(mapStateToProps, null)(ArticleForm);

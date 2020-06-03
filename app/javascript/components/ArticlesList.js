@@ -1,6 +1,15 @@
+import { fetchArticles } from '../actions/ArticleActions';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import {connect} from 'react-redux';
+
+
+const mapStateToProps = state => {
+    return {
+	articles: state.articles,
+    };
+};
 
 class ArticlesList extends React.Component {
     constructor(props) {
@@ -11,6 +20,10 @@ class ArticlesList extends React.Component {
 
 	this.searchInput = React.createRef();
 	this.updateSearchTerm = this.updateSearchTerm.bind(this);
+    }
+
+    componentWillMount() {
+	this.props.dispatch(fetchArticles());
     }
     
     updateSearchTerm() {
@@ -29,12 +42,12 @@ class ArticlesList extends React.Component {
     }
     
     renderArticles() {
-	const { activeId, articles } = this.props;
+	const articles = this.props.articles;
 	const filteredArticles = articles
 	      .filter(el => this.matchSearchTerm(el));
 	return filteredArticles.map((article) => (
 		<li key={article.id}>
-		<Link to={`/articles/${article.id}`} className={activeId === article.id ? 'active' : ''}>
+		<Link to={`/articles/${article.id}`}>
 	            {"title: "}
 	            {article.title }
 	            {' - '} 
@@ -68,14 +81,5 @@ class ArticlesList extends React.Component {
     }
 }
 
-ArticlesList.propTypes = {
-    activeId: PropTypes.number,
-    articles: PropTypes.arrayOf(PropTypes.object),
-};
 
-ArticlesList.defaultProps = {
-    activeId: undefined,
-    articles: [],
-};
-
-export default ArticlesList;
+export default connect(mapStateToProps, null)(ArticlesList);
