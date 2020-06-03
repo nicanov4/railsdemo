@@ -32,16 +32,16 @@ class ArticlesList extends React.Component {
 	const { activeId, articles } = this.props;
 	const filteredArticles = articles
 	      .filter(el => this.matchSearchTerm(el));
-	return filteredArticles.map(article => (
+	return filteredArticles.map((article) => (
+		<li key={article.id}>
 		<Link to={`/articles/${article.id}`} className={activeId === article.id ? 'active' : ''}>
-	    <li key={article.id}>
-		    {"title: "}
+	            {"title: "}
 	            {article.title }
 	            {' - '} 
 	            {'text:' }
 	            {article.text }
-	    </li>
-	  </Link>
+	    </Link>
+		</li>
 	));
     }
 

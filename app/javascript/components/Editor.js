@@ -33,7 +33,8 @@ class Editor extends React.Component {
     addArticle(newArticle) {
 	this.props.dispatch(addArticle(newArticle));
 	const { history } = this.props;
-	history.push(`/articles/${newArticle.id}`);
+	
+	history.push(`/articles`);
     }
 
     updateArticle(updatedArticle) {
@@ -53,7 +54,6 @@ class Editor extends React.Component {
 
 
     render() {
-	console.log(this.props.articles);
 	if (this.props.articles === null) return null;
 
 	const { match } = this.props;
