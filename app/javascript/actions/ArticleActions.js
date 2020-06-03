@@ -19,10 +19,11 @@ export function addArticle(newArticle) {
 	axios.post('/api/articles.json', newArticle)
 	    .then((response) => {
 		success('Article Added');
+		const nArticle = response.data
 		dispatch({
 		    type: 'ADD_ARTICLE',
 		    payload: {
-			newArticle,
+			nArticle,
 		    },
 		})
 	    })
@@ -34,10 +35,11 @@ export function updateArticle(updatedArticle) {
 	axios.put(`/api/articles/${updatedArticle.id}.json`, updatedArticle)
 	    .then((response) => {
 		success('Article Updated');
+		const uArticle = response.data
 		dispatch({
 		    type: 'UPDATE_ARTICLE',
 		    payload: {
-			updatedArticle
+			uArticle,
 		    },
 		})
 	    })

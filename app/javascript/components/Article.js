@@ -1,10 +1,11 @@
+
 import React from 'react';
-import EventNotFound from './ArticleNotFound';
+import ArticleNotFound from './ArticleNotFound';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const Article = ({ article, onDelete }) => {
-        if (!event) return <EventNotFound />;
+        if (!article) return <ArticleNotFound />;
     return (
 	<div className="articleContainer">
 	<Link to={`/articles/${article.id}/edit`}>Edit</Link>

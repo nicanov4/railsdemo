@@ -21,16 +21,18 @@ export default function reducer(state={
 	console.log(articles);
     }
     case "ADD_ARTICLE": {
+	const { nArticle } = action.payload;
+	console.log(nArticle);
 	return {
 	    ...state,
-	    articles: [...state.articles, action.payload],
+	    articles: [...state.articles, nArticle],
 	}
     }
     case "UPDATE_ARTICLE": {
-	const { updatedArticle } = action.payload
+	const { uArticle } = action.payload
 	const newArticles = [...state.articles]
-	const articleToUpdate = newArticles.findIndex(article => article.id === updatedArticle.id)
-	newArticles[articleToUpdate] = action.payload;
+	const articleToUpdate = newArticles.findIndex(article => article.id === uArticle.id)
+	newArticles[articleToUpdate] = uArticle;
 
 	return {
 	    ...state,
@@ -38,9 +40,10 @@ export default function reducer(state={
 	}
     }
     case "DELETE_ARTICLE": {
+	const { id } = action.payload;
 	return {
 	    ...state,
-	    articles: state.articles.filter(article => article.id !== action.payload),
+	    articles: state.articles.filter(article => article.id !== id),
 	}
     }
     }

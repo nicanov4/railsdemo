@@ -26,7 +26,7 @@ class Editor extends React.Component {
 	this.deleteArticle = this.deleteArticle.bind(this);
     }
 
-    componentDidMount() {
+    componentWillMount() {
 	this.props.dispatch(fetchArticles());
     }
 
@@ -53,6 +53,7 @@ class Editor extends React.Component {
 
 
     render() {
+	console.log(this.props.articles);
 	if (this.props.articles === null) return null;
 
 	const { match } = this.props;
