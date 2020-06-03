@@ -22,7 +22,6 @@ export default function reducer(state={
     }
     case "ADD_ARTICLE": {
 	const { nArticle } = action.payload;
-	console.log(nArticle);
 	return {
 	    ...state,
 	    articles: [...state.articles, nArticle],
