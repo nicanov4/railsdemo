@@ -8,7 +8,8 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
     return {
-	article:state.article,
+	article: state.article,
+	fetched: state.fetched,
     };
 };
 
@@ -16,7 +17,6 @@ class Article extends React.Component {
     constructor(props) {
 	super(props);
 	this.state = {
-	    isLoaded: false,
 	    articleId: props.match.params.id,
 	}
     }
@@ -31,20 +31,17 @@ class Article extends React.Component {
     }
     
     componentDidMount() {
+	console.log("hi");
 	this.props.dispatch(fetchArticle(this.state.articleId));
-	console.log(this.props.article);
-	this.setState({isLoaded: true});
     }
     
     render() {
-	if (!this.state.isLoaded) return <ArticleNotFound/>;
+	console.log(this.props.fetched);
+	if (!this.props.fetched) return <ArticleNotFound/>;
 	return (
 		<div className="articleContainer">
 		<Link to={{
 		    pathname: `/articles/${this.state.articleId}/edit`,
-		    state: {
-			article: this.props.article,
-		    }
 		}}>Edit</Link>
 		<button className="delete" type="button" onClick={() => this.deleteArticle()}>
 		Delete

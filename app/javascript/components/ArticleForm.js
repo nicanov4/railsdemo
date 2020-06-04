@@ -3,41 +3,20 @@ import EventNotFound from './ArticleNotFound';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { isEmptyObject, validateArticle } from '../helpers/helpers';
-import { addArticle, updateArticle } from '../actions/ArticleActions';
-import { connect } from 'react-redux'
-
-const mapStateToProps = state => {
-    return {
-	articles: state.articles,
-    };
-};
 
 class ArticleForm extends React.Component {
     constructor(props) {
 	super(props);
-	
+
 	this.state = {
-	    article: props.location.state.article,
+	    article: props.article,
 	    errors: {},
 	};
 
 	this.handleSubmit = this.handleSubmit.bind(this);
 	this.handleInputChange = this.handleInputChange.bind(this);
-	this.addArticle = this.addArticle.bind(this);
     }
 
-    addArticle(newArticle) {
-	this.props.dispatch(addArticle(newArticle));
-	const { history } =this.props;
-	history.push(`/articles`);
-    }
-
-    updateArticle(updatedArticle) {
-	this.props.dispatch(updateArticle(updatedArticle));
-	const { history } = this.props;
-	history.push(`/articles/${updatedArticle.id}`);
-    }
-    
     handleSubmit(e) {
 	e.preventDefault();
 	const { article } = this.state;
@@ -45,11 +24,8 @@ class ArticleForm extends React.Component {
 	if (!isEmptyObject(errors)) {
 	    this.setState({ errors });
 	} else {
-	    if (!article.id) {
-		this.addArticle(article);
-	    } else {
-		this.updateArticle(article);
-	    }
+	    const { onSubmit } = this.props;
+	    onSubmit(article);
 	}
     }
 
@@ -86,9 +62,10 @@ class ArticleForm extends React.Component {
 
     render() {
 	const { article } = this.state;
-	console.log(article);
-	const { match } = this.props;
-	if (!article.id && match.path === '/article/:id/edit') return <ArticleNotFound />;
+	const { path } = this.props;
+
+	if (!event.id && path === '/events/:id/edit') return <EventNotFound />;
+
 	const cancelURL = article.id ? `/articles/${article.id}` : '/articles';
 	return (
 		<div>
@@ -117,12 +94,20 @@ class ArticleForm extends React.Component {
     }
 }
 
+
+
 ArticleForm.propTypes = {
-    match: PropTypes.shape(),
+    article: PropTypes.shape(),
+    path: PropTypes.string.isRequired,
+    onSubmit: PropTypes.func.isRequired,
 };
 
 ArticleForm.defaultProps = {
+    article: {
+	title: '',
+	text: '',
+    },
 };
 
 
-export default connect(mapStateToProps, null)(ArticleForm);
+export default ArticleForm;

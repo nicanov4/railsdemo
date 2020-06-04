@@ -6,7 +6,15 @@ export default function reducer(state={
     article: null,
 }, action) {
 
+    console.log(action);
     switch (action.type) {
+    case "FETCH_ARTICLE": {
+	return {
+	    article: action.payload,
+	    fetched: true
+	}
+	console.log(action.payload);
+    }
     case "FETCH_ARTICLES": {
 	return {...state, fetching: true}
     }
@@ -18,11 +26,6 @@ export default function reducer(state={
 	    fetching: false,
 	    fetched: true,
 	    articles: action.payload,
-	}
-    }
-    case "FETCH_ARTICLE": {
-	return {
-	    ...state, article: action.payload,
 	}
     }
     case "ADD_ARTICLE": {

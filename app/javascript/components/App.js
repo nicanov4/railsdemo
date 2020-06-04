@@ -13,10 +13,10 @@ import { Switch } from 'react-router-dom';
 const App = () => (
 	<div>
 	<Switch>
-	<Route path="/articles/:id/edit" component={ArticleForm} />
-	<Route path="/articles/new" component={ArticleForm} />
-	<Route path="/articles/:id" component={Article} />
-	<Route path="/articles" component={ArticlesList} />
+	<Route exact path="/articles/:id/edit" component={Editor} />
+	<Route exact path="/articles/new" component={Editor} />
+	<Route exact path="/articles/:id" component={Article} />
+	<Route exact path="/articles" component={ArticlesList} />
         </Switch>
 	<Alert stack={ { limit: 3 } } />
 	</div>

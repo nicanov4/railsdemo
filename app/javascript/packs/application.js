@@ -19,7 +19,6 @@ import { fetchArticles } from '../actions/ArticleActions';
 import reducer from '../reducers/ArticleReducer';
 
 const store = createStore(reducer, applyMiddleware(thunk));
-store.dispatch(fetchArticles());
 document.addEventListener('DOMContentLoaded', () => {
     render(
 	    <BrowserRouter>
