@@ -3,6 +3,7 @@ export default function reducer(state={
     fetching: false,
     fetched: false,
     error: null,
+    article: null,
 }, action) {
 
     switch (action.type) {
@@ -18,7 +19,11 @@ export default function reducer(state={
 	    fetched: true,
 	    articles: action.payload,
 	}
-	console.log(articles);
+    }
+    case "FETCH_ARTICLE": {
+	return {
+	    ...state, article: action.payload,
+	}
     }
     case "ADD_ARTICLE": {
 	const { nArticle } = action.payload;

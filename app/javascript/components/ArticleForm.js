@@ -117,22 +117,11 @@ class ArticleForm extends React.Component {
     }
 }
 
-const defaultLocation = {
-    state: {
-	article: {
-	    title: '',
-	    text: '',
-	},
-    },
-};
-
-
 ArticleForm.propTypes = {
     match: PropTypes.shape(),
 };
 
 ArticleForm.defaultProps = {
-    location: defaultLocation,
 };
 
 

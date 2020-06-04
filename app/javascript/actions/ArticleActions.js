@@ -15,6 +15,16 @@ export function fetchArticles() {
     }
 }
 
+export function fetchArticle(articleId) {
+    return function(dispatch) {
+	axios.get(`/api/articles/${articleId}.json`)
+	    .then((response) => {
+		dispatch({type:"FETCH_ARTICLE", payload: response.data})
+	    })
+    }
+}
+    
+
 export function addArticle(newArticle) {
     return function(dispatch) {
 	axios.post('/api/articles.json', newArticle)
