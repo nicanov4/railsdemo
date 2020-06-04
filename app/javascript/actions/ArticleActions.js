@@ -6,24 +6,25 @@ import axios from "axios";
 
 export function fetchArticles() {
     return function(dispatch) {
+	dispatch({ type: "FETCH_ARTICLES_REQUEST"});
 	axios.get('/api/articles.json')
 	    .then((response) => {
 		dispatch({type: "FETCH_ARTICLES_FULFILLED", payload: response.data})
 	    }).catch((err) => {
-		dispatch({type: "FETCH_ARTICLES_REJECTED", payload:err})
+		dispatch({type: "FETCH_ARTICLES_REJECTED", payload: err})
 	    })
     }
 }
 
 export function fetchArticle(articleId) {
     return function(dispatch) {
+	dispatch({ type: "FETCH_ARTICLE_REQUEST"});
 	axios.get(`/api/articles/${articleId}.json`)
 	    .then((response) => {
-		dispatch({type:"FETCH_ARTICLE", payload: response.data})
+		dispatch({type:"FETCH_ARTICLE_SUCCESS", payload: response.data})
 	    })
     }
 }
-    
 
 export function addArticle(newArticle) {
     return function(dispatch) {
@@ -41,9 +42,9 @@ export function addArticle(newArticle) {
     }
 }
 
-export function updateArticle(updatedArticle) {
+export function updateArticle(updatedArticle, articleId) {
     return function(dispatch) {
-	axios.put(`/api/articles/${updatedArticle.id}.json`, updatedArticle)
+	axios.put(`/api/articles/${articleId}.json`, updatedArticle)
 	    .then((response) => {
 		success('Article Updated');
 		const uArticle = response.data

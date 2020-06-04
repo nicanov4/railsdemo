@@ -10,8 +10,10 @@ import Article from './Article';
 import { fetchArticles, addArticle, updateArticle, deleteArticle } from '../actions/ArticleActions';
 
 const mapStateToProps = state => {
+    const { article } = state
     return {
-	article: state.article,
+	isFetching: article.isFetching,
+	article: article.article
     };
 };
 
@@ -29,7 +31,7 @@ class Editor extends React.Component {
     }
 
     updateArticle(updatedArticle) {
-	this.props.dispatch(updateArticle(updatedArticle));
+	this.props.dispatch(updateArticle(updatedArticle, this.props.match.params.id));
 	const { history } = this.props;
 	history.push(`/articles`);
     }

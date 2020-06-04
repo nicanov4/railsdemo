@@ -4,10 +4,11 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 
-
 const mapStateToProps = state => {
+    const { articles } = state;
     return {
-	articles: state.articles,
+	isFetching: articles.isFetching,
+	articles: articles.items
     };
 };
 
@@ -22,7 +23,7 @@ class ArticlesList extends React.Component {
 	this.updateSearchTerm = this.updateSearchTerm.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
 	this.props.dispatch(fetchArticles());
     }
     

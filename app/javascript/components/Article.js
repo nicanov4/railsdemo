@@ -7,9 +7,10 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
+    const { article } = state
     return {
-	article: state.article,
-	fetched: state.fetched,
+	isFetching: article.isFetching,
+	article: article.article
     };
 };
 
@@ -24,20 +25,19 @@ class Article extends React.Component {
     deleteArticle() {
 	const sure = window.confirm('Are you sure?');
 	if (sure) {
-	    this.props.dispatch(deleteArticle(this.state.articleId));
+	    console.log(this.props.match.params.id);
+	    this.props.dispatch(deleteArticle(this.props.match.params.id));
 	    const { history } = this.props;
 	    history.push(`/articles`);
 	}
     }
     
     componentDidMount() {
-	console.log("hi");
 	this.props.dispatch(fetchArticle(this.state.articleId));
     }
     
     render() {
-	console.log(this.props.fetched);
-	if (!this.props.fetched) return <ArticleNotFound/>;
+	if (this.props.isFetched) return <ArticleNotFound/>;
 	return (
 		<div className="articleContainer">
 		<Link to={{
