@@ -3,6 +3,7 @@ import EventNotFound from './ArticleNotFound';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { isEmptyObject, validateArticle } from '../helpers/helpers';
+import { Field, reduxForm } from 'redux-form';
 
 class ArticleForm extends React.Component {
     constructor(props) {
@@ -14,7 +15,6 @@ class ArticleForm extends React.Component {
 	};
 
 	this.handleSubmit = this.handleSubmit.bind(this);
-	this.handleInputChange = this.handleInputChange.bind(this);
     }
 
     handleSubmit(e) {
@@ -29,37 +29,7 @@ class ArticleForm extends React.Component {
 	}
     }
 
-    handleInputChange(article) {
-	const { target } = article;
-	const { name } = target;
-	const value = target.type === 'checkbox' ? target.checked : target.value;
-
-	this.setState(prevState => ({
-	    article: {
-		...prevState.article,
-		[name]: value,
-	    },
-	}));
-    }
-
-    renderErrors() {
-	const { errors } = this.state;
-	if (isEmptyObject(errors)) {
-	    return null;
-	}
-
-	return (
-	        <div className="errors">
-		<h3>The following errors prohibited the event from being saved:</h3>
-		<ul>
-		{Object.values(errors).map(error => (
-		        <li key={error}>{error}</li>
-		))}
-	    </ul>
-		</div>
-	);
-    }
-
+    
     render() {
 	const { article } = this.state;
 	const { path } = this.props;
@@ -70,18 +40,17 @@ class ArticleForm extends React.Component {
 	return (
 		<div>
 		<h2>New Article</h2>
-		{this.renderErrors()}
 		<form className="articleForm" onSubmit={this.handleSubmit}>
 		<div>
 		<label htmlFor="title">
 		<strong>Title:</strong>
-		<input type="text" id="title" name="title" onChange={this.handleInputChange} value={article.title}/>
+		<Field name="title" id="title" component="input" type="text" value={article.title}/>
 		</label>
 		</div>
 		<div>
 		<label htmlFor="text">
 		<strong>Text:</strong>
-		<textarea cols="30" rows="10" id="text" name="text" onChange={this.handleInputChange} value={article.text}/>
+		<Field name="text" id="text" component="input" type="text" value={article.text}/>
 		</label>
 		</div>
 		<div className="form-actions">
@@ -109,5 +78,8 @@ ArticleForm.defaultProps = {
     },
 };
 
+ArticleForm = reduxForm({
+    form: 'contact'
+})(ArticleForm)
 
 export default ArticleForm;
