@@ -33,7 +33,6 @@ const articles = (state = { items: [], isFetching: false }, action) => {
 	const newArticles = [...state.items]
 	const articleToUpdate = newArticles.findIndex(article => article.id === uArticle.id)
 	newArticles[articleToUpdate] = uArticle;
-
 	return {
 	    ...state,
 	    items: newArticles,
@@ -41,9 +40,10 @@ const articles = (state = { items: [], isFetching: false }, action) => {
     }
     case "DELETE_ARTICLE": {
 	const { id } = action.payload;
+	const newArticles = [...state.items]
 	return {
 	    ...state,
-	    items: state.items.filter(a => a.id !== Number(id.id)),
+	    items: newArticles.filter(a => a.id !== Number(id)),
 	}
     }
     default:

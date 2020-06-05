@@ -25,7 +25,6 @@ class Article extends React.Component {
     deleteArticle() {
 	const sure = window.confirm('Are you sure?');
 	if (sure) {
-	    console.log(this.props.match.params.id);
 	    this.props.dispatch(deleteArticle(this.props.match.params.id));
 	    const { history } = this.props;
 	    history.push(`/articles`);
