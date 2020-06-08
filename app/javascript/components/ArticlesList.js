@@ -47,7 +47,6 @@ class ArticlesList extends React.Component {
     
     
     render() {
-	console.log(this.props.articles);
 	const columns = [{
 	    Header: 'Title',
 	    accessor: 'title',
@@ -55,7 +54,10 @@ class ArticlesList extends React.Component {
 	},{
 	    Header: 'Text',
 	    accessor: 'text'
-	}] 
+	}]
+	const articles = this.props.articles;
+	const filteredArticles = articles
+	      .filter(el => this.matchSearchTerm(el));
 	return (
 	        <section className="articleList">
 		<h2>Articles
@@ -72,7 +74,7 @@ class ArticlesList extends React.Component {
 	    
 		<div>
 		<ReactTable
-	    data={this.props.articles}
+	    data={filteredArticles}
 	    columns={columns}
 
 	        />
