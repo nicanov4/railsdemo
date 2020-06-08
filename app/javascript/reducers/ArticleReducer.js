@@ -1,3 +1,4 @@
+import { reducer as formReducer } from 'redux-form'
 import { combineReducers } from 'redux';
 
 const articles = (state = { items: [], isFetching: false }, action) => {
@@ -74,6 +75,7 @@ const article = (state = { article, isFetching: false }, action ) => {
 
 const rootReducer = combineReducers({
     article,
-    articles
+    articles,
+    form: formReducer
 });
 export default rootReducer;
