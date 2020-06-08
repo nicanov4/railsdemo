@@ -1040,7 +1040,7 @@
     webpack-cli "^3.3.10"
     webpack-sources "^1.4.3"
 
-"@scarf/scarf@^1.0.4", "@scarf/scarf@^1.0.5":
+"@scarf/scarf@^1.0.5":
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@scarf/scarf/-/scarf-1.0.5.tgz#accee0bce88a9047672f7c8faf3cada59c996b81"
   integrity sha512-9WKaGVpQH905Aqkk+BczFEeLQxS07rl04afFRPUG9IcSlOwmo5EVVuuNu0d4M9LMYucObvK0LoAe+5HfMW2QhQ==
@@ -2024,6 +2024,11 @@ class-utils@^0.3.5:
     define-property "^0.2.5"
     isobject "^3.0.0"
     static-extend "^0.1.1"
+
+classnames@^2.2.5:
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
+  integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
 
 clean-stack@^2.0.0:
   version "2.2.0"
@@ -6358,12 +6363,12 @@ react-s-alert@^1.4.1:
   dependencies:
     babel-runtime "^6.23.0"
 
-react-table@^7.1.0:
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/react-table/-/react-table-7.1.0.tgz#c975cd67e917c54190b6c9df29f085285b0c3f4e"
-  integrity sha512-AZpgW0Xpo6Z7jxXZIBovzCGoYVkuBwATsJh7X4+JXwq9JtDaorOmxWC9gKx5Hui4d+n+I99enyyJS+LRtKydxA==
+react-table@6.7.4:
+  version "6.7.4"
+  resolved "https://registry.yarnpkg.com/react-table/-/react-table-6.7.4.tgz#cd23e15d437034bf2374e9c8d343e1b4e1960e4f"
+  integrity sha512-V0D19Vriw0h4Ho0ECshMjgStOlsRUENYmYtgKtgv4DhpNcxQQ9lxhOdOHLda7uuiPZOJm6B3XvghfZsPTVaSNQ==
   dependencies:
-    "@scarf/scarf" "^1.0.4"
+    classnames "^2.2.5"
 
 react@^16.13.1:
   version "16.13.1"

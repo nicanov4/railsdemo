@@ -4,6 +4,7 @@ import ReactTable from "react-table";
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
+import "react-table/react-table.css";
 
 const mapStateToProps = state => {
     const { articles } = state;
