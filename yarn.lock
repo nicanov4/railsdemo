@@ -1040,7 +1040,7 @@
     webpack-cli "^3.3.10"
     webpack-sources "^1.4.3"
 
-"@scarf/scarf@^1.0.5":
+"@scarf/scarf@^1.0.4", "@scarf/scarf@^1.0.5":
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@scarf/scarf/-/scarf-1.0.5.tgz#accee0bce88a9047672f7c8faf3cada59c996b81"
   integrity sha512-9WKaGVpQH905Aqkk+BczFEeLQxS07rl04afFRPUG9IcSlOwmo5EVVuuNu0d4M9LMYucObvK0LoAe+5HfMW2QhQ==
@@ -6357,6 +6357,13 @@ react-s-alert@^1.4.1:
   integrity sha512-+cSpVPe6YeGklhlo7zbVlB0Z6jdiU9HPmEVzp5nIhNm9lvdL7rVO2Jx09pCwT99GmODyoN0iNhbQku6r7six8A==
   dependencies:
     babel-runtime "^6.23.0"
+
+react-table@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/react-table/-/react-table-7.1.0.tgz#c975cd67e917c54190b6c9df29f085285b0c3f4e"
+  integrity sha512-AZpgW0Xpo6Z7jxXZIBovzCGoYVkuBwATsJh7X4+JXwq9JtDaorOmxWC9gKx5Hui4d+n+I99enyyJS+LRtKydxA==
+  dependencies:
+    "@scarf/scarf" "^1.0.4"
 
 react@^16.13.1:
   version "16.13.1"

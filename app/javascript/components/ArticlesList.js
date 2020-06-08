@@ -1,5 +1,6 @@
 import { fetchArticles } from '../actions/ArticleActions';
 import React from 'react';
+import ReactTable from "react-table";
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
@@ -42,26 +43,15 @@ class ArticlesList extends React.Component {
 	);
     }
     
-    renderArticles() {
-	const articles = this.props.articles;
-	const filteredArticles = articles
-	      .filter(el => this.matchSearchTerm(el));
-	return filteredArticles.map((article) => (
-		<li key={article.id}>
-		<Link to={`/articles/${article.id}`}>
-	            {"title: "}
-	            {article.title }
-	            {' - '} 
-	            {'text:' }
-	            {article.text }
-	    </Link>
-		</li>
-	));
-    }
-
-
     
     render() {
+	const columns = [{
+	    Header: 'Title',
+	    accessor: 'title'
+	},{
+	    Header: 'Text',
+	    accessor: 'text'
+	}]  
 	return (
 	        <section className="articleList">
 		<h2>Articles
@@ -76,7 +66,13 @@ class ArticlesList extends React.Component {
 	        onKeyUp={this.updateSearchTerm}
 	        />
 	    
-		<ul>{this.renderArticles()}</ul>
+		<div>
+		<ReactTable
+	    data={this.props.articles}
+	    columns={columns}
+
+	        />
+		</div>        
 		</section>
 	);
     }
