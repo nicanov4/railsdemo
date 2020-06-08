@@ -4,8 +4,7 @@ const TextInput = (field) => (
         <div className="input-row">
 	
 	<input {...field.input} type="text"/>
-	{field.meta.touched && field.meta.error &&
-	 <span className="error">{field.meta.error}</span>}
+	{field.meta.touched && ((field.meta.error && <span>{field.meta.error}</span>) || (field.meta.warning && <span>{field.meta.warning}</span>))}
     </div>
 );
 
