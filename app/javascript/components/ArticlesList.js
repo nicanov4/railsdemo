@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import "react-table/react-table.css";
 
+
 const mapStateToProps = state => {
     const { articles } = state;
     return {
@@ -46,13 +47,15 @@ class ArticlesList extends React.Component {
     
     
     render() {
+	console.log(this.props.articles);
 	const columns = [{
 	    Header: 'Title',
-	    accessor: 'title'
+	    accessor: 'title',
+	    Cell: cellInfo => <a href={ `/articles/${cellInfo.original.id}`}>{cellInfo.original.title}</a>
 	},{
 	    Header: 'Text',
 	    accessor: 'text'
-	}]  
+	}] 
 	return (
 	        <section className="articleList">
 		<h2>Articles
