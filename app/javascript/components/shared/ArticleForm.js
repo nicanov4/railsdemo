@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import TextInput from './TextInput';
 
 const required = value => value ? undefined : 'Required'
-const minValue = min => value => value && value < min ? `Must be at least ${min}` : undefined
+const minValue = min => value => value && value.length < min ? `Must be at least ${min}` : undefined
 const minValue5 = minValue(5)
 
 let ArticleForm = props => {
