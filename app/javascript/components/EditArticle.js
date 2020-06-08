@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import ArticleForm from '../shared/ArticleForm';
+import ArticleForm from './shared/ArticleForm';
 import { fetchArticle, updateArticle } from '../actions/ArticleActions';
 
 const mapStateToProps = state => {
@@ -16,7 +16,6 @@ class EditArticle extends React.Component {
     constructor(props) {
 	super(props);
 	this.updateArticle = this.updateArticle.bind(this);
-	this.componentDidMount = this.componentDidMount.bind(this);
     }
     
     componentDidMount() {

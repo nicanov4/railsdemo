@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import ArticleForm from '../shared/ArticleForm';
+import ArticleForm from './shared/ArticleForm';
 import { addArticle } from '../actions/ArticleActions';
 
 const mapStateToProps = state => {
