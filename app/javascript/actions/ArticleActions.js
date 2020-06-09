@@ -73,4 +73,29 @@ export function deleteArticle(id) {
     }
 }
 
+export function fetchComments(id) {
+    return function(dispatch) {
+	dispatch({type: 'FETCH_COMMENTS_REQUEST' });
+	axios.get(`/api/articles/${id}/comments.json`)
+	    .then((response) => {
+		dispatch({type:'FETCH_COMMENTS_FULFILLED', payload: response.data})
+	    })
+    }
+}
+
+export function deleteComment(comment) {
+    return function(dispatch) {
+	axios.delete(`/api/articles/${comment.article_id}/comments/${comment.id}.json`)
+	    .then((response) => {
+		success('Comment Deleted');
+		dispatch({
+		    type: 'DELETE_COMMENT',
+		    payload: {
+			comment,
+		    },
+		})
+	    })
+    }
+}
+
 

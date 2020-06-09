@@ -1,7 +1,8 @@
-import { deleteArticle, fetchArticle } from '../actions/ArticleActions';
+import { deleteArticle, deleteComment, fetchArticle, fetchComments } from '../actions/ArticleActions';
 import PropsRoute from './PropsRoute';
 import React from 'react';
 import ArticleNotFound from './ArticleNotFound';
+import Comments from './Comments';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -13,9 +14,11 @@ import Col from 'react-bootstrap/Col';
 
 const mapStateToProps = state => {
     const { article } = state
+    const { comments } = state
     return {
 	isFetching: article.isFetching,
-	article: article.article
+	article: article.article,
+	comments: comments
     };
 };
 
@@ -25,8 +28,16 @@ class Article extends React.Component {
 	this.state = {
 	    articleId: props.match.params.id,
 	}
+	this.deleteComment = this.deleteComment.bind(this)
     }
 
+    deleteComment(comment) {
+	const sure = window.confirm('Are you sure?');
+	if(sure) {
+	    this.props.dispatch(deleteComment(comment));
+	}
+    }
+    
     deleteArticle() {
 	const sure = window.confirm('Are you sure?');
 	if (sure) {
@@ -38,6 +49,7 @@ class Article extends React.Component {
     
     componentDidMount() {
 	this.props.dispatch(fetchArticle(this.state.articleId));
+	this.props.dispatch(fetchComments(this.state.articleId));
     }
     
     render() {
@@ -48,6 +60,9 @@ class Article extends React.Component {
 		<Breadcrumb.Item href="/">Articles List</Breadcrumb.Item>
 		<Breadcrumb.Item active>{this.props.article.title}</Breadcrumb.Item>
 		</Breadcrumb>
+
+		<h3>Title: {this.props.article.title}</h3>
+	    
 		<Link to={{
 		    pathname: `/articles/${this.state.articleId}/edit`,
 		}}>
@@ -56,17 +71,17 @@ class Article extends React.Component {
 		<Button variant="danger" onClick={() => this.deleteArticle()}>
 		Delete
 	    </Button>
-		<ul>
-		<strong>Title:</strong>
-		<li>
-		{this.props.article.title}
-	    </li>
-		<li>
-		<strong>Text:</strong>
-		{' '}
-	    {this.props.article.text}
-	    </li>
-		</ul>
+		
+		<Row>
+		<Col>
+		<h4>Text:</h4>
+		</Col>
+		</Row>
+		<Row>
+		<Col>{this.props.article.text}</Col>
+		</Row>
+		<h4>Comments: </h4>
+		<Comments comments={this.props.comments} onDelete={this.deleteComment}/>
 		</div>
 	);
     }

@@ -3,8 +3,12 @@ class Api::CommentsController < ApplicationController
   respond_to :json
   
   before_action :find_article_by_id
-  before_action :authenticate_user!
   
+  def index
+    @comments = @article.comments
+    respond_with @comments
+  end
+    
   def create
     @comment = @article.comments.new(comment_params)
     @comment.user_id = current_user.id

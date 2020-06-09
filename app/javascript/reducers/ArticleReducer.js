@@ -72,10 +72,39 @@ const article = (state = { article, isFetching: false }, action ) => {
     }
 }
 
+const comments = (state = { items: [], isFetching: false }, action) => {
+    switch(action.type) {
+    case "FETCH_COMMENTS_REQUEST": {
+	return {
+	    ...state,
+	    isFetching: true
+	}
+    }
+    case "FETCH_COMMENTS_FULFILLED": {
+	return {
+	    isFetching: false,
+	    items: action.payload
+	}
+    }
+    case "DELETE_COMMENT": {
+	const { comment } = action.payload;
+	const id = comment.id;
+	const newComments = [...state.items]
+	return {
+	    ...state,
+	    items: newComments.filter(c => c.id !== Number(id))
+	}
+    }
+    default:
+	return state;
+    }
+}
 
 const rootReducer = combineReducers({
     article,
     articles,
+    comments,
     form: formReducer
 });
+    
 export default rootReducer;
