@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ArticleForm from './shared/ArticleForm';
 import { fetchArticle, updateArticle } from '../actions/ArticleActions';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 const mapStateToProps = state => {
     const { article } = state
@@ -31,6 +32,11 @@ class EditArticle extends React.Component {
     render() {
 	return (
 		<div>
+		<Breadcrumb>
+		<Breadcrumb.Item href="/articles">Articles List</Breadcrumb.Item>
+		<Breadcrumb.Item href=".">{this.props.article.title}</Breadcrumb.Item>
+		<Breadcrumb.Item active>Edit</Breadcrumb.Item>
+		</Breadcrumb>
 		<ArticleForm initialValues={this.props.article} onSubmit={this.updateArticle}>
 		</ArticleForm>
 		</div>
