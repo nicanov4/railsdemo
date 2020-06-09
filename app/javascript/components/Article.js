@@ -5,6 +5,11 @@ import ArticleNotFound from './ArticleNotFound';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Button } from 'react-bootstrap';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
 
 const mapStateToProps = state => {
     const { article } = state
@@ -39,12 +44,18 @@ class Article extends React.Component {
 	if (this.props.isFetched) return <ArticleNotFound/>;
 	return (
 		<div className="articleContainer">
+		<Breadcrumb>
+		<Breadcrumb.Item href="/">Articles List</Breadcrumb.Item>
+		<Breadcrumb.Item active>{this.props.article.title}</Breadcrumb.Item>
+		</Breadcrumb>
 		<Link to={{
 		    pathname: `/articles/${this.state.articleId}/edit`,
-		}}>Edit</Link>
-		<button className="delete" type="button" onClick={() => this.deleteArticle()}>
+		}}>
+		<Button variant="success">Edit</Button>
+		</Link>
+		<Button variant="danger" onClick={() => this.deleteArticle()}>
 		Delete
-	    </button>
+	    </Button>
 		<ul>
 		<strong>Title:</strong>
 		<li>

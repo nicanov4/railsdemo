@@ -1,4 +1,3 @@
-import './App.css';
 import React from 'react';
 import NewArticle from './NewArticle';
 import EditArticle from './EditArticle';
@@ -9,6 +8,7 @@ import { Provider } from 'react-redux';
 import ArticlesList from './ArticlesList';
 import Article from './Article';
 import { Switch } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.css';
 
 const App = () => (
 	<div>

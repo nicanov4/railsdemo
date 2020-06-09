@@ -4,8 +4,10 @@ import ReactTable from "react-table";
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
-import "react-table/react-table.css";
-
+import 'react-table/react-table.css';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const mapStateToProps = state => {
     const { articles } = state;
@@ -29,7 +31,7 @@ class ArticlesList extends React.Component {
     componentDidMount() {
 	this.props.dispatch(fetchArticles());
     }
-    
+
     updateSearchTerm() {
 	this.setState({ searchTerm: this.searchInput.current.value });
     }
@@ -44,8 +46,8 @@ class ArticlesList extends React.Component {
 	    value => value.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1,
 	);
     }
-    
-    
+
+
     render() {
 	const columns = [{
 	    Header: 'Title',
@@ -60,25 +62,36 @@ class ArticlesList extends React.Component {
 	      .filter(el => this.matchSearchTerm(el));
 	return (
 	        <section className="articleList">
-		<h2>Articles
-	            <Link to="/articles/new">New Article</Link>
-	        </h2>
+		<div>
+		<Breadcrumb>
+		<Breadcrumb.Item active>Articles List</Breadcrumb.Item>
+		</Breadcrumb>
+		</div>
 
+		<div>
+		<h2>Articles</h2>
+		<Row>
+		<Col xs lg="2">
 		<input
-	        className="search"
-	        placeholder="Search"
-	        type="text"
-	        ref={this.searchInput}
-	        onKeyUp={this.updateSearchTerm}
+	    className="search"
+	    placeholder="Search"
+	    type="text"
+	    ref={this.searchInput}
+	    onKeyUp={this.updateSearchTerm}
 	        />
-	    
+		</Col>
+		<Col xs lg="2">
+		<Link to="articles/new">New Article</Link>
+		</Col>
+		</Row>
+		</div>
 		<div>
 		<ReactTable
 	    data={filteredArticles}
 	    columns={columns}
 
 	        />
-		</div>        
+		</div>
 		</section>
 	);
     }
