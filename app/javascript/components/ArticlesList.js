@@ -1,4 +1,4 @@
-import { fetchArticles } from '../actions/ArticleActions';
+import { fetchArticles, deleteArticle } from '../actions/ArticleActions';
 import React from 'react';
 import ReactTable from "react-table";
 import PropTypes from 'prop-types';
@@ -8,6 +8,7 @@ import 'react-table/react-table.css';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 
 const mapStateToProps = state => {
     const { articles } = state;
@@ -25,9 +26,19 @@ class ArticlesList extends React.Component {
 	};
 
 	this.searchInput = React.createRef();
+	this.deleteArticle = this.deleteArticle.bind(this);
 	this.updateSearchTerm = this.updateSearchTerm.bind(this);
     }
 
+    deleteArticle(articleId) {
+	const sure = window.confirm('Are you sure?');
+	if (sure) {
+	    this.props.dispatch(deleteArticle(articleId));
+	    const { history } = this.props;
+            history.push(`/articles`);
+	}
+    }       
+    
     componentDidMount() {
 	this.props.dispatch(fetchArticles());
     }
@@ -56,6 +67,12 @@ class ArticlesList extends React.Component {
 	},{
 	    Header: 'Text',
 	    accessor: 'text'
+	},{
+	    Header:'Actions',
+	    Cell: cellInfo => <div><Link to={{ pathname: `/articles/${cellInfo.original.id}/edit`,}}>                                                                                     <Button variant="success">Edit</Button>
+		</Link>
+		<Button variant="danger" onClick={() => this.deleteArticle(cellInfo.original.id)}>Delete</Button>
+		</div>
 	}]
 	const articles = this.props.articles;
 	const filteredArticles = articles

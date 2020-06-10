@@ -98,4 +98,19 @@ export function deleteComment(comment) {
     }
 }
 
+export function addComment(comment, articleId) {
+    return function(dispatch) {
+	axios.post(`/api/articles/${articleId}/comments.json`, comment)
+	    .then((response) => {
+		success('Comment Added');
+		const nComment = response.data
+		dispatch({
+		    type: 'ADD_COMMENT',
+		    payload: {
+			nComment,
+		    },
+		})
+	    })
+    }
+}
 

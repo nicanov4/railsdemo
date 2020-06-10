@@ -4,6 +4,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import CommentsNotFound from './CommentsNotFound';
+import CommentModal from './CommentModal';
 
 const Comments = ({comments, onDelete}) => {
     if (comments.items.length === 0) { return(<CommentsNotFound></CommentsNotFound>)}
@@ -14,7 +15,8 @@ const Comments = ({comments, onDelete}) => {
 		    <div key={comment.id}>
 		    <ListGroup.Item as="li"  key={comment.id}>
 		    <Row>{comment.commenter}: {comment.body}</Row>
-		    <Row>{<Button variant="danger" size="sm"  type="button" onClick={() => onDelete(comment)}>Delete Comment</Button>}</Row>
+		    <Row><CommentModal comment={comment}></CommentModal>
+		    {<Button variant="danger" size="sm"  type="button" onClick={() => onDelete(comment)}>Delete Comment</Button>}</Row>
 		    </ListGroup.Item>
 		    </div>
 	    ))}

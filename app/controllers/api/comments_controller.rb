@@ -11,7 +11,6 @@ class Api::CommentsController < ApplicationController
     
   def create
     @comment = @article.comments.new(comment_params)
-    @comment.user_id = current_user.id
     @comment.save
     respond_with @comment
     

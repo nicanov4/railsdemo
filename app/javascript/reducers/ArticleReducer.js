@@ -86,6 +86,13 @@ const comments = (state = { items: [], isFetching: false }, action) => {
 	    items: action.payload
 	}
     }
+    case "ADD_COMMENT": {
+	const { nComment } = action.payload;
+	return {
+	    ...state,
+	    items: [...state.items, nComment],
+	}
+    }
     case "DELETE_COMMENT": {
 	const { comment } = action.payload;
 	const id = comment.id;

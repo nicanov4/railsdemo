@@ -1,8 +1,10 @@
-import { deleteArticle, deleteComment, fetchArticle, fetchComments } from '../actions/ArticleActions';
+import { deleteArticle, addComment, deleteComment, fetchArticle, fetchComments } from '../actions/ArticleActions';
 import PropsRoute from './PropsRoute';
 import React from 'react';
+import moment from 'moment';
 import ArticleNotFound from './ArticleNotFound';
 import Comments from './Comments';
+import CommentsForm from './CommentsForm';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -28,9 +30,15 @@ class Article extends React.Component {
 	this.state = {
 	    articleId: props.match.params.id,
 	}
-	this.deleteComment = this.deleteComment.bind(this)
+	this.deleteComment = this.deleteComment.bind(this);
+	this.addComment = this.addComment.bind(this);
     }
 
+    addComment(comment) {
+	console.log(comment);
+	this.props.dispatch(addComment(comment, this.props.match.params.id));
+    }
+    
     deleteComment(comment) {
 	const sure = window.confirm('Are you sure?');
 	if(sure) {
@@ -53,6 +61,7 @@ class Article extends React.Component {
     }
     
     render() {
+	var date = moment(this.props.article.created_at).format('MMMM Do YYYY');
 	if (this.props.isFetched) return <ArticleNotFound/>;
 	return (
 		<div className="articleContainer">
@@ -60,9 +69,12 @@ class Article extends React.Component {
 		<Breadcrumb.Item href="/">Articles List</Breadcrumb.Item>
 		<Breadcrumb.Item active>{this.props.article.title}</Breadcrumb.Item>
 		</Breadcrumb>
-
 		<h3>Title: {this.props.article.title}</h3>
-	    
+		<Row>
+		<Col>
+		<label>Posted on {date}</label>
+		</Col>
+		</Row>
 		<Link to={{
 		    pathname: `/articles/${this.state.articleId}/edit`,
 		}}>
@@ -80,9 +92,12 @@ class Article extends React.Component {
 		<Row>
 		<Col>{this.props.article.text}</Col>
 		</Row>
+
 		<h4>Comments: </h4>
 		<Comments comments={this.props.comments} onDelete={this.deleteComment}/>
-		</div>
+		<CommentsForm onSubmit={this.addComment}></CommentsForm>
+
+	    </div>
 	);
     }
 }
