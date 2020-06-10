@@ -1,8 +1,6 @@
 class Api::CommentsController < ApplicationController
 
-  respond_to :json
-  skip_before_action :verify_authenticity_token
-  before_action :authenticate_user!, only: [:create, :destroy] 
+  respond_to :json 
   before_action :find_article_by_id
   
   def index
@@ -20,13 +18,13 @@ class Api::CommentsController < ApplicationController
 
   def destroy
     @comment = @article.comments.find(params[:id])
-    respond_with @articles
+    respond_with @comment.destroy
     
   end
   
   private
   def comment_params
-    params.require(:comment).permit(:body, :isPrivate)
+    params.require(:comment).permit(:body, :isPrivate, :article_id, :user_id)
   end
 
   def find_article_by_id
