@@ -10,9 +10,10 @@ class Api::CommentsController < ApplicationController
     
   def create
     @comment = @article.comments.new(comment_params)
+    @comment.commenter = current_user.email
     @comment.user_id = current_user.id
     @comment.save
-    respond_with @article
+    render 'show.json.jbuilder'
     
   end
 
