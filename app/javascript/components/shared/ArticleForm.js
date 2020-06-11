@@ -1,4 +1,5 @@
 import 'react-widgets/dist/css/react-widgets.css';
+import SelectList from 'react-widgets/lib/SelectList'
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import moment from 'moment';
 import momentLocalizer from 'react-widgets-moment';
@@ -16,6 +17,12 @@ momentLocalizer(moment)
 const required = value => value ? undefined : 'Required'
 const minValue = min => value => value && value.length < min ? `Must be at least ${min}` : undefined
 const minValue5 = minValue(5)
+
+const renderSelectList = ({ input, data }) => (
+	<SelectList {...input}
+    onBlur={() => input.onBlur()}
+    data={data} />
+)
 
 const renderDateTimePicker = ({input: { onChange, value }, showTime, meta }) => (
       <div>
@@ -48,7 +55,17 @@ let ArticleForm = props => {
 	    <Field name="text" component={TextInput}  validate={required}/>
 	    </Col>
 	    </Form.Group>
-	    
+
+	    <Form.Group controlId="formStatus">
+	    <Form.Label>Do you want to publish or draft for the future?</Form.Label>
+	    <Col sm="10">
+	    <Field
+	name="status"
+	component={renderSelectList}
+	data={[ 'Published', 'Draft' ]}/>
+	    </Col>
+	    </Form.Group>
+	
 	    <Form.Group controlId="formDate">
 	    <Form.Label column sm="10">Choose a due date for your article: </Form.Label>
 	    <Col sm="10">

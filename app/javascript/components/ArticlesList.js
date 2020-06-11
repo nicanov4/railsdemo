@@ -66,6 +66,9 @@ class ArticlesList extends React.Component {
 	    accessor: 'title',
 	    Cell: cellInfo => <a href={ `/articles/${cellInfo.original.id}`}>{cellInfo.original.title}</a>
 	},{
+	    Header: 'Status',
+	    accessor: 'status',
+	},{
 	    Header: 'Due Date',
 	    accessor: 'due_date',
 	    Cell: cellInfo => <label>{ moment(cellInfo.original.due_date).format('MMMM Do YYYY h:mm a')}</label>

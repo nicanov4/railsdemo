@@ -63,6 +63,7 @@ class Article extends React.Component {
     render() {
 	this.props.comments.items.sort((a, b) => (moment(b.created_at) - moment(a.created_at)));	
 	var date = moment(this.props.article.created_at).format('MMMM Do YYYY');
+	var dueDate = moment(this.props.article.due_date).format('MMMM Do YYYY h:ss a');
 	if (this.props.isFetched) return <ArticleNotFound/>;
 	return (
 		<div className="articleContainer">
@@ -74,6 +75,14 @@ class Article extends React.Component {
 		<Row>
 		<Col>
 		<label>Posted on {date}</label>
+		</Col>
+		</Row>
+		<Row>
+		<Col xs lg="2">
+		<label>Status: {this.props.article.status}</label>
+		</Col>
+		<Col md="auto">
+		<label>Article Due on {dueDate}</label>
 		</Col>
 		</Row>
 		<Link to={{
