@@ -29,7 +29,7 @@ class Api::ArticlesController < ApplicationController
   
   private
   def article_params
-    params.require(:article).permit(:title, :text)
+    params.require(:article).permit(:title, :text, :due_date)
   end
 
   def find_article_by_id

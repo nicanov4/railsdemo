@@ -61,6 +61,7 @@ class Article extends React.Component {
     }
     
     render() {
+	this.props.comments.items.sort((a, b) => (moment(b.created_at) - moment(a.created_at)));	
 	var date = moment(this.props.article.created_at).format('MMMM Do YYYY');
 	if (this.props.isFetched) return <ArticleNotFound/>;
 	return (
