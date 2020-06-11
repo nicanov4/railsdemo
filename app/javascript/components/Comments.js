@@ -14,9 +14,7 @@ const Comments = ({comments, onDelete}) => {
 	    {comments.items.map(comment => (
 		    <div key={comment.id}>
 		    <ListGroup.Item as="li"  key={comment.id}>
-		    <Row>{comment.commenter}: {comment.body}</Row>
-		    <Row><CommentModal comment={comment}></CommentModal>
-		    {<Button variant="danger" size="sm"  type="button" onClick={() => onDelete(comment)}>Delete Comment</Button>}</Row>
+		    <Row><CommentModal onDelete={onDelete} comment={comment}></CommentModal></Row>
 		    </ListGroup.Item>
 		    </div>
 	    ))}

@@ -1,5 +1,6 @@
 import { fetchArticles, deleteArticle } from '../actions/ArticleActions';
 import React from 'react';
+import moment from 'moment';
 import ReactTable from "react-table";
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -67,6 +68,10 @@ class ArticlesList extends React.Component {
 	},{
 	    Header: 'Text',
 	    accessor: 'text'
+	},{
+	    Header: 'Date Posted',
+	    accessor: 'created_at',
+	    Cell: cellInfo => <label>{ moment(cellInfo.original.created_at).format('MMMM Do YYYY')}</label>
 	},{
 	    Header:'Actions',
 	    Cell: cellInfo => <div><Link to={{ pathname: `/articles/${cellInfo.original.id}/edit`,}}>                                                                                     <Button variant="success">Edit</Button>

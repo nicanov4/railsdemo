@@ -24,13 +24,14 @@ class CommentModal extends React.Component {
     render() {
 	return (
 		<div>
-		<Button variant="primary" size="sm" onClick={this.handleShow}>Show Comment</Button>
+		<a cursor="pointer" onClick={this.handleShow}>{this.props.comment.commenter}: {this.props.comment.body}</a>
 
 	        <Modal show={this.state.show} onHide={this.handleClose}>
 		<Modal.Header closeButton>
-		<Modal.Title>Comment: </Modal.Title>
+		<Modal.Title>Comment by {this.props.comment.commenter}: </Modal.Title>
 		</Modal.Header>
 		<Modal.Body>{this.props.comment.body}</Modal.Body>
+		<Button variant="danger" size="sm"  type="button" onClick={() => this.props.onDelete(this.props.comment)}>Delete Comment</Button>
 		</Modal>
 		</div>
 	);
@@ -38,6 +39,7 @@ class CommentModal extends React.Component {
 }
 
 CommentModal.propTypes = {
+    onDelete: PropTypes.func.isRequired,
     comment: PropTypes.shape(),
 };
 
