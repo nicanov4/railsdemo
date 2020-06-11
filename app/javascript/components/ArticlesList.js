@@ -50,7 +50,7 @@ class ArticlesList extends React.Component {
 
     matchSearchTerm(obj) {
 	const {
-	    id, published, created_at, updated_at, ...rest
+	    id, created_at, updated_at, ...rest
 	} = obj;
 	const { searchTerm } = this.state;
 

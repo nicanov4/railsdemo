@@ -25,7 +25,7 @@ class Api::CommentsController < ApplicationController
   
   private
   def comment_params
-    params.require(:comment).permit(:body, :isPrivate, :article_id, :user_id)
+    params.require(:comment).permit(:body, :public, :article_id, :user_id)
   end
 
   def find_article_by_id

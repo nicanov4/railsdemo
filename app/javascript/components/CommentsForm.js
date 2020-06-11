@@ -1,4 +1,6 @@
 import React from 'react';
+import 'react-widgets/dist/css/react-widgets.css';
+import SelectList from 'react-widgets/lib/SelectList'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
@@ -8,36 +10,31 @@ import PropTypes from 'prop-types';
 
 const required = value => value ? undefined : 'Required'
 
-const normalizeBoolean = value => {
-    if (value === "true") {
-	return true;
-    }
-
-    if (value === "false") {
-	return false;
-    }
-
-    return value;
-};
+const renderSelectList = ({ input, data }) =>
+      <SelectList {...input}
+onBlur={() => input.onBlur()}
+data={data} />
 
 let CommentsForm = props => {
     const { handleSubmit, submitting } = props
     return (
 	    <div>
 	    <Form onSubmit={handleSubmit(props.onSubmit)}>
-
-	    <Form.Group controlId="formIsPrivate">
-	    <Form.Label>Private Comment?</Form.Label>
-	    <div>
-	    <Form.Label><Field name="isPrivate" component="input" type="radio" value="false" normalize={normalizeBoolean}/> Public</Form.Label>
-	    <Form.Label><Field name="isPrivate" component="input" type="radio" value="true"normalize={normalizeBoolean}/> Private</Form.Label>
-	    </div>
-	    </Form.Group>
 	
 	    <Form.Group controlId="formBody">
-	    <Form.Label column sm="2">Enter a Comment:</Form.Label>
+	    <Form.Label column sm="10">Enter a Comment:</Form.Label>
 	    <Col sm="10">
 	    <Field name="body" component={TextInput} validate={ required }/>
+	    </Col>
+	    </Form.Group>
+
+	    <Form.Group controlId="formIsPrivate">
+	    <Form.Label column sm="10">Private Comment?</Form.Label>
+	    <Col sm="10">
+	    <Field
+	name="public"
+	component={renderSelectList}
+	data={[ 'Private', 'Public' ]}/>
 	    </Col>
 	    </Form.Group>
 
