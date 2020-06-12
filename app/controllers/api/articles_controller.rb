@@ -15,7 +15,11 @@ class Api::ArticlesController < ApplicationController
   end
   
   def create
-    respond_with :api, Article.create(article_params)
+    @a = Article.new(article_params)
+    @a.user_id = current_user.id
+    @a.author = current_user.email
+    @a.save
+    respond_with :api, @a
   end
 
   def update

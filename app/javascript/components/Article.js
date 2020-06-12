@@ -72,6 +72,7 @@ class Article extends React.Component {
 		<Breadcrumb.Item active>{this.props.article.title}</Breadcrumb.Item>
 		</Breadcrumb>
 		<h3>Title: {this.props.article.title}</h3>
+		<h4>Author: {this.props.article.author}</h4>
 		<Row>
 		<Col>
 		<label>Posted on {date}</label>
